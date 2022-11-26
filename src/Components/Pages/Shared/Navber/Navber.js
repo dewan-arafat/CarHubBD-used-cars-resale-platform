@@ -31,7 +31,7 @@ const Navber = () => {
                 </ul>
             </div>
             <div className="navbar-end lg:mr-14">
-                <Link className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Log In</Link>
+                <Link to='/login' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Log In</Link>
             </div>
         </div>
     );
