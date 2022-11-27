@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../../Context/AuthContext/AuthProvider';
 
 const Navber = () => {
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(err => console.log(err));
+    }
     const menuItem =
         <>
             <li><Link to='' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Home</Link></li>
@@ -31,7 +39,14 @@ const Navber = () => {
                 </ul>
             </div>
             <div className="navbar-end lg:mr-14">
-                <Link to='/login' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Log In</Link>
+                {user?.uid ?
+                    <>
+                        <Link to="/dashboard">Dashboard</Link>
+                        <button onClick={handleLogOut}>Sign out</button>
+                    </>
+                    : <Link to='/login' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Log In</Link>}
+
+
             </div>
         </div>
     );

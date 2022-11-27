@@ -13,7 +13,6 @@ const CategoryCard = ({ card }) => {
                     <h2 className="card-title">{category_name}</h2>
                 </div>
             </Link>
-
         </div>
     );
 };
