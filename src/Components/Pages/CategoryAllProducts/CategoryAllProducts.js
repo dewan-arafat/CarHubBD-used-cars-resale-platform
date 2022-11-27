@@ -17,7 +17,7 @@ const CategoryAllProducts = () => {
             }
             {
                 bookingProduct &&
-                <BookingModal bookingProduct={bookingProduct}></BookingModal>
+                <BookingModal bookingProduct={bookingProduct} setBookingProduct={setBookingProduct}></BookingModal>
             }
 
         </div>
