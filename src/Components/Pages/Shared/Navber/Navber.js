@@ -13,10 +13,9 @@ const Navber = () => {
     const menuItem =
         <>
             <li><Link to='' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Home</Link></li>
-            <li><Link to='/about' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Category</Link></li>
-            <li><Link to='/appointment' className='text-stone-600 font-semibold text-xl hover:text-teal-400 p-3'>Blog</Link></li>
-            <li><Link to='' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Reviews</Link></li>
-            <li><Link to='' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Contact Us</Link></li>
+            <li><Link to='/category' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Category</Link></li>
+            <li><Link to='/dashboard' className='text-stone-600 font-semibold text-xl hover:text-teal-400 p-3'>DashBoard</Link></li>
+            <li><Link to='/blog' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Blog</Link></li>
         </>
     return (
         <div className="navbar bg-stone-100">
@@ -41,7 +40,6 @@ const Navber = () => {
             <div className="navbar-end lg:mr-14">
                 {user?.uid ?
                     <>
-                        <Link to="/dashboard">Dashboard</Link>
                         <button onClick={handleLogOut}>Sign out</button>
                     </>
                     : <Link to='/login' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Log In</Link>}
