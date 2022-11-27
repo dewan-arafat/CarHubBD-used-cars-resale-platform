@@ -3,19 +3,34 @@ import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { AuthContext } from '../../../Context/AuthContext/AuthProvider';
+import toast from 'react-hot-toast';
 
 const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const [data, setData] = useState("");
+    const [signUpError, setSignUPError] = useState('')
 
     const handleRegister = data => {
         console.log(data);
+        setSignUPError('');
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                toast('User Created Successfully')
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => { })
+                    .catch(err => console.log(err));
+
             })
+            .catch(error => {
+                console.log(error)
+                setSignUPError(error.message)
+            });
     }
     return (
 
@@ -63,6 +78,7 @@ const Register = () => {
                         >Create Account
                         </button>
                     </form>
+                    {signUpError && <p className='text-red-500'>{signUpError}</p>}
 
                     <div className="text-center text-sm text-grey-dark mt-4">
                         By signing up, you agree to the

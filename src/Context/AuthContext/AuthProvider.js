@@ -18,9 +18,15 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
+    const updateUser = (userInfo) => {
+        return updateProfile(user, userInfo);
+    }
+
     const logOut = () => {
         return signOut(auth);
     }
+
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             console.log('user observing');
@@ -34,6 +40,7 @@ const AuthProvider = ({ children }) => {
         createUser,
         signIn,
         user,
+        updateUser,
         logOut
     }
     return (
