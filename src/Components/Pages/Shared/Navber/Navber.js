@@ -13,7 +13,7 @@ const Navber = () => {
     }
     const menuItem =
         <>
-            <li><Link to='' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Home</Link></li>
+            <li><Link to='/' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Home</Link></li>
             <li><Link to='/category' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Category</Link></li>
             <li><Link to='/dashboard' className='text-stone-600 font-semibold text-xl hover:text-teal-400 p-3'>DashBoard</Link></li>
             <li><Link to='/blog' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Blog</Link></li>

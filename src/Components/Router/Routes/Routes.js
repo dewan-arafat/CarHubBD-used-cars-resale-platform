@@ -4,6 +4,7 @@ import Main from "../../Layout/Main";
 import CategoryAllProducts from "../../Pages/CategoryAllProducts/CategoryAllProducts";
 import DashBoard from "../../Pages/DashBoard/DashBoard";
 import MyBookings from "../../Pages/DashBoard/MyBookings/MyBookings";
+import MyWishlist from "../../Pages/DashBoard/MyWishlist/MyWishlist";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Register from "../../Pages/Register/Register";
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
                 path: '/dashboard',
                 element: <MyBookings></MyBookings>
             },
+            {
+                path: "/dashboard/wishlists",
+                element: <MyWishlist></MyWishlist>
+            },
+
 
         ]
     }

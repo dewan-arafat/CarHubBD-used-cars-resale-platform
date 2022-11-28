@@ -1,28 +1,26 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../../Context/AuthContext/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
-import MyBookingCard from './MyBookingCard';
+import MyWishlistCard from './MyWishlistCard';
 
-const MyBookings = () => {
+const MyWishlist = () => {
     const { user } = useContext(AuthContext);
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
+    const url = `http://localhost:5000/wishlists?email=${user?.email}`;
 
-    const { data: bookings = [] } = useQuery({
-        queryKey: ['bookings', user?.email],
+    const { data: wishlists = [] } = useQuery({
+        queryKey: ['wishlists', user?.email],
         queryFn: async () => {
             const res = await fetch(url);
             const data = await res.json();
             return data;
         }
     })
-
-
     return (
         <div className='pt-8'>
             {
-                bookings.map(booking =>
+                wishlists.map(wishlist =>
 
-                    <MyBookingCard booking={booking}></MyBookingCard>
+                    <MyWishlistCard wishlist={wishlist}></MyWishlistCard>
 
                 )
             }
@@ -30,4 +28,4 @@ const MyBookings = () => {
     );
 };
 
-export default MyBookings;
+export default MyWishlist;
