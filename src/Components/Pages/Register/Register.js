@@ -5,13 +5,20 @@ import { useState } from "react";
 import { AuthContext } from '../../../Context/AuthContext/AuthProvider';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import useToken from '../../../Hook/useToken';
 
 const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const [data, setData] = useState("");
     const [signUpError, setSignUPError] = useState('')
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail);
     const navigate = useNavigate();
+
+    if (token) {
+        navigate('/');
+    }
 
     const handleRegister = data => {
         console.log(data);
@@ -34,9 +41,10 @@ const Register = () => {
             })
             .catch(error => {
                 console.log(error)
-                setSignUPError(error.message)
+
             });
     }
+
 
     const saveUser = (name, email, user_role) => {
         const user = { name, email, user_role };
@@ -49,9 +57,10 @@ const Register = () => {
         })
             .then(res => res.json())
             .then(data => {
-                navigate('/');
+                setCreatedUserEmail(email);
             })
     }
+
     return (
 
         <div className="bg-grey-lighter min-h-screen flex flex-col">
