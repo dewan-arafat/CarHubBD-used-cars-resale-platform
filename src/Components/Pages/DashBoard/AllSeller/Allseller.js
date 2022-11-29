@@ -1,14 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
 
 const Allseller = () => {
-    const [sellers, setSellers] = useState([])
-    const url = `http://localhost:5000/sellers`;
+
+
+
+    const { data: sellers = [], refetch } = useQuery({
+        queryKey: ['sellers'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/users/sellers');
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    const [users, setUsers] = useState([])
+    const url = `http://localhost:5000/users`;
     useEffect(() => {
         fetch(url)
             .then(res => res.json())
-            .then(data => setSellers(data))
+            .then(data => setUsers(data))
     }, [])
+
+    const handleVerify = id => {
+        const url = `http://localhost:5000/sellers/${id}`
+        fetch(url, {
+            method: 'PUT',
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    toast.success('Make admin successful.')
+                    refetch();
+                }
+            })
+        console.log(url)
+    }
 
     return (
 
@@ -43,9 +74,9 @@ const Allseller = () => {
                                     </td>
                                     <td className="py-4 px-6">
                                         {
-                                            seller?.status ?
+                                            seller?.seller_status ?
                                                 <>
-                                                    {seller.status}
+                                                    {seller.seller_status}
                                                 </>
                                                 :
                                                 <>
@@ -54,7 +85,8 @@ const Allseller = () => {
                                         }
                                     </td>
                                     <td className="py-4 px-6">
-                                        <Link to="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Verify</Link>
+                                        <button onClick={() => handleVerify(seller._id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Verify</button>
+
                                     </td>
                                 </tr>
 

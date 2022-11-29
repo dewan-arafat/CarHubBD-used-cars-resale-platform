@@ -9,6 +9,7 @@ import MyWishlist from "../../Pages/DashBoard/MyWishlist/MyWishlist";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Register from "../../Pages/Register/Register";
+import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoutes from "../PrivateRoute/PrivateRoutes";
 
 
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/dashboard/sellers",
-                element: <Allseller></Allseller>
+                element: <AdminRoute><Allseller></Allseller></AdminRoute>
             }
 
 
