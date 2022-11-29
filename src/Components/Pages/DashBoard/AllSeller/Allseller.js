@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import useAdmin from '../../../../Hook/useAdmin';
+import { AuthContext } from '../../../../Context/AuthContext/AuthProvider';
 
 
 const Allseller = () => {
-
-
+    const { user } = useContext(AuthContext);
+    const [isAdmin] = useAdmin(user?.email);
 
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ['sellers'],
@@ -16,14 +18,6 @@ const Allseller = () => {
             return data;
         }
     });
-
-    const [users, setUsers] = useState([])
-    const url = `http://localhost:5000/users`;
-    useEffect(() => {
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setUsers(data))
-    }, [])
 
     const handleVerify = id => {
         const url = `http://localhost:5000/sellers/${id}`
@@ -84,8 +78,20 @@ const Allseller = () => {
                                                 </>
                                         }
                                     </td>
+
                                     <td className="py-4 px-6">
-                                        <button onClick={() => handleVerify(seller._id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Verify</button>
+
+                                        {
+                                            seller?.seller_status ?
+                                                <>
+
+                                                </>
+                                                :
+                                                <>
+                                                    {isAdmin &&
+                                                        <button onClick={() => handleVerify(seller._id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Verify</button>}
+                                                </>
+                                        }
 
                                     </td>
                                 </tr>
