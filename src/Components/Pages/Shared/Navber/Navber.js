@@ -18,7 +18,7 @@ const Navber = () => {
             {
                 user?.uid ?
                     <>
-                        <li><Link to='/dashboard' className='text-stone-600 font-semibold text-xl hover:text-teal-400 p-3'>DashBoard</Link></li>
+                        <li><Link to='/dashboard' className=' text-stone-600 font-semibold text-xl hover:text-teal-400 p-3'>DashBoard</Link></li>
                     </> :
                     <></>
             }
@@ -50,8 +50,8 @@ const Navber = () => {
                     <>
                         <button onClick={handleLogOut}>Sign out</button>
                     </>
-                    : <> <button className='pr-3'><Link to='/login' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Log In</Link></button>
-                        <Link to='/register' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white ">Sign Up</Link></>
+                    : <><Link to='/login' className="p-1 border rounded bg-gradient-to-r from-primary to-secondary text-white">Log In</Link>
+                    </>
                 }
 
 

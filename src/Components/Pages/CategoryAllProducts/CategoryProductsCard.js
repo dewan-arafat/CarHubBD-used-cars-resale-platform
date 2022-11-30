@@ -20,7 +20,8 @@ const CategoryProductsCard = ({ product, setBookingProduct }) => {
             product_name,
             resale_price,
             market_price,
-            product_id: _id
+            product_id: _id,
+            product_img
         }
         console.log(wishlist)
         fetch('https://furniture-resale-server-smoky.vercel.app/wishlists', {
