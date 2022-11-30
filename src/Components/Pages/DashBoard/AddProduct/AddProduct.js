@@ -10,6 +10,10 @@ import { format } from 'date-fns';
 const AddProduct = () => {
     const { user } = useContext(AuthContext);
     const date = format(new Date(), 'PPpp');
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+
+    const imageHostKey = process.env.REACT_APP_imgbb_key;
 
     const { data: categories = [], isLoading } = useQuery({
         queryKey: ['category'],
@@ -20,81 +24,126 @@ const AddProduct = () => {
         }
     })
 
-    const handleAddProduct = event => {
-        event.preventDefault();
-        const form = event.target;
-        const product_name = form.product_name.value;
-        const category_id = form.category_section.value;
-        const product_img = form.product_img.value;
-        const market_price = form.market_price.value;
-        const resale_price = form.resale_price.value;
-        const location = form.location.value;
-        const useOfYear = form.useOfYear.value;
-        const seller_contact = form.seller_contact.value;
-        //const email = form.email.value;
-        //const phone = form.phone.value;
+    const handleAddProduct = data => {
 
-        const product = {
-            product_name,
-            category_id,
-            product_img,
-            market_price,
-            resale_price,
-            location,
-            useOfYear,
-            seller_name: user.displayName,
-            seller_email: user.email,
-            seller_contact,
-            upload_time: date,
-        }
-        console.log(product)
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`
+
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(imgData => {
+                // if (imgData.sucess) {
+
+                const product = {
+                    product_name: data.product_name,
+                    category_id: data.category_id,
+                    product_img: imgData.data.url,
+                    market_price: data.market_price,
+                    resale_price: data.resale_price,
+                    location: data.location,
+                    useOfYear: data.useOfYear,
+                    seller_status: user.seller_status,
+                    seller_name: user.displayName,
+                    seller_email: user.email,
+                    seller_contact: data.seller_contact,
+                    upload_time: date,
+                }
+                console.log(product);
+
+                fetch('http://localhost:5000/products', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                        authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify(product)
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        console.log(result);
+                        toast.success(`Product added successfully`);
+                        navigate('/dashboard/addproduct')
+                    })
+                // }
+            })
+        reset();
+    }
+    if (isLoading) {
+        return <Loading></Loading>
     }
 
     return (
-        <div className='w-96 p-7'>
-            <h2 className="text-4xl">Add A Product</h2>
-            <form onSubmit={handleAddProduct}>
-                <div className="form-control w-full max-w-xs">
-                    <label className="label"> <span className="label-text">Product Name</span></label>
-                    <input name='product_name' required type="text" className="input input-bordered w-full max-w-xs" />
+        <div className='w-full md:w-4/5 p-3 md:p-7'>
+            <h2 className="text-4xl text-center">Add A Product</h2>
+            <form className='md:px-10' onSubmit={handleSubmit(handleAddProduct)}>
+                <div className='flex justify-between'>
+                    <div className="form-control w-full max-w-xs pr-2">
+                        <label className="label"> <span className="label-text">Product Name</span></label>
+                        <input {...register("product_name", {
+                            required: "Name is Required"
+                        })} type="text" className="input input-bordered w-full max-w-xs" />
+                        {errors.product_name && <p className='text-red-500'>{errors.product_name.message}</p>}
+                    </div>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"> <span className="label-text">Category</span></label>
+                        <select {...register("category_id", {
+                            required: "Name is Required"
+                        })}
+                            className="select input-bordered w-full max-w-xs">
+                            {
+                                categories.map(category => <option
+                                    key={category._id}
+                                    value={category.category_id}
+                                >{category.category_name}</option>)
+                            }
+                        </select>
+                    </div>
                 </div>
-
-                <div className="form-control w-full max-w-xs">
-                    <label className="label"> <span className="label-text">Category</span></label>
-                    <select required name="category_section"
-                        className="select input-bordered w-full max-w-xs">
-                        {
-                            categories.map(category => <option
-                                key={category._id}
-                                value={category.category_id}
-                            >{category.category_name}</option>)
-                        }
-                    </select>
+                <div className='flex justify-between'>
+                    <div className="form-control w-full pr-2 ">
+                        <label className="label"> <span className="label-text">Original Price</span></label>
+                        <input {...register("market_price", {
+                            required: "Name is Required"
+                        })} type="number" className="input input-bordered w-full max-w-xs" />
+                    </div>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"> <span className="label-text">Resale Price</span></label>
+                        <input {...register("resale_price", {
+                            required: "Name is Required"
+                        })} type="number" className="input input-bordered w-full max-w-xs" />
+                    </div>
                 </div>
-                <div className="form-control w-full max-w-xs">
-                    <label className="label"> <span className="label-text">Original Price</span></label>
-                    <input name='market_price' type="number" required className="input input-bordered w-full max-w-xs" />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                    <label className="label"> <span className="label-text">Resale Price</span></label>
-                    <input required name='resale_price' type="number" className="input input-bordered w-full max-w-xs" />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                    <label className="label"> <span className="label-text">Duration of Use</span></label>
-                    <input required name="useOfYear" type="number" className="input input-bordered w-full max-w-xs" />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                    <label className="label"> <span className="label-text">Contact Number</span></label>
-                    <input required name="seller_contact" type="text" className="input input-bordered w-full max-w-xs" />
+                <div className='flex justify-between'>
+                    <div className="form-control w-full max-w-xs pr-2">
+                        <label className="label"> <span className="label-text">Duration of Use</span></label>
+                        <input {...register("useOfYear", {
+                            required: "Name is Required"
+                        })} type="number" className="input input-bordered w-full max-w-xs" />
+                    </div>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"> <span className="label-text">Contact Number</span></label>
+                        <input {...register("seller_contact", {
+                            required: "Name is Required"
+                        })} type="text" className="input input-bordered w-full max-w-xs" />
+                    </div>
                 </div>
                 <div className="form-control w-full max-w-xs">
                     <label className="label"> <span className="label-text">Location</span></label>
-                    <input required name="location" type="text" className="input input-bordered w-full max-w-xs" />
+                    <input {...register("location", {
+                        required: "Name is Required"
+                    })} type="text" className="input input-bordered w-full max-w-xs" />
                 </div>
 
                 <div className="form-control w-full max-w-xs">
                     <label className="label"> <span className="label-text">Photo</span></label>
-                    <input name="product_img" type="file" className="input input-bordered w-full max-w-xs" />
+                    <input {...register("image", {
+                        required: "Name is Required"
+                    })} type="file" className="input input-bordered w-full max-w-xs" />
                 </div>
 
 

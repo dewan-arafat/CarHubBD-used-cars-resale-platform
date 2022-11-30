@@ -12,13 +12,16 @@ const Category = () => {
     }, [])
 
     return (
-        <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 pt-24 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:pt-10'>
-            {
-                category.map(card => <CategoryCard
-                    key={card._id}
-                    card={card}
-                ></CategoryCard>)
-            }
+        <div className='pt-20'>
+            <h1 className='text-center text-3xl font-bold'>Product Category</h1>
+            <div className='grid gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 px-4 pt-24 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:pt-10'>
+                {
+                    category.map(card => <CategoryCard
+                        key={card._id}
+                        card={card}
+                    ></CategoryCard>)
+                }
+            </div>
         </div>
     );
 };

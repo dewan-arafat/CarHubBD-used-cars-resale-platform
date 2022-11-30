@@ -8,7 +8,7 @@ import { data } from 'autoprefixer';
 const CategoryProductsCard = ({ product, setBookingProduct }) => {
     const { user } = useContext(AuthContext);
     const date = format(new Date(), 'PPpp');
-    const { product_name, market_price, resale_price, category_id, _id } = product;
+    const { product_name, product_img, market_price, resale_price, category_id, seller_name, _id, location, useOfYear } = product;
 
     const handleWishlist = () => {
 
@@ -46,15 +46,24 @@ const CategoryProductsCard = ({ product, setBookingProduct }) => {
     }
     return (
 
-        <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full max-w-sm bg-stone-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
             <Link to="">
-                <img className="p-8 rounded-t-lg" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" alt="product-img" />
+                <img className="p-8 rounded-t-lg" src={product_img} />
             </Link>
             <div className="px-5 pb-5">
                 <Link to="">
                     <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{product_name}</h5>
                 </Link>
-                <div><span className="font-bold text-gray-900 dark:text-white line-through">{market_price}</span> <span className='text-xl font-bold'>{resale_price}</span> </div>
+                <div><span className="font-bold text-red-700 dark:text-white line-through">{market_price}</span> <span className='text-xl text-blue-500 font-bold'>{resale_price}</span> </div>
+                <div>
+                    <h3 className='font-bold'>Seller: <span>{seller_name}</span> </h3>
+                </div>
+                <div>
+                    <h3 className='font-bold'>Location: <span>{location}</span> </h3>
+                </div>
+                <div>
+                    <h3 className='font-bold'>Used For: <span>{useOfYear} yrs</span> </h3>
+                </div>
                 <div className="flex items-center justify-end">
 
 

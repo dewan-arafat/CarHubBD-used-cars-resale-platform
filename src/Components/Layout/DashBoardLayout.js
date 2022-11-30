@@ -5,11 +5,14 @@ import useAdmin from '../../Hook/useAdmin';
 import { useContext } from 'react';
 import { AuthContext } from '../../Context/AuthContext/AuthProvider';
 import useSeller from '../../Hook/useSeller';
+import useBuyer from '../../Hook/useBuyer';
 
 const DashBoardLayout = () => {
     const { user } = useContext(AuthContext);
     const [isAdmin] = useAdmin(user?.email);
     const [isSeller] = useSeller(user?.email);
+    const [isBuyer] = useBuyer(user?.email);
+
 
     return (
         <div>
@@ -22,8 +25,12 @@ const DashBoardLayout = () => {
                 <div className="drawer-side">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-                        <li><Link to="/dashboard">My Bookings</Link></li>
-                        <li><Link to="/dashboard/wishlists">My Wishlist</Link></li>
+                        {
+                            isBuyer &&
+                            <> <li><Link to="/dashboard">My Bookings</Link></li>
+                                <li><Link to="/dashboard/wishlists">My Wishlist</Link></li></>
+                        }
+
                         {
                             isSeller && <>
 
@@ -33,8 +40,6 @@ const DashBoardLayout = () => {
 
                             </>
                         }
-
-
 
                         {
                             isAdmin && <>

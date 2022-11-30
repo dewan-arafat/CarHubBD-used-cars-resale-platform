@@ -12,7 +12,9 @@ import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Register from "../../Pages/Register/Register";
 import AdminRoute from "../AdminRoute/AdminRoute";
+import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import PrivateRoutes from "../PrivateRoute/PrivateRoutes";
+import SellerRoute from "../SellerRoute/SellerRoute";
 
 
 const router = createBrowserRouter([
@@ -43,17 +45,17 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         element:
-            <PrivateRoutes>
-                <DashBoardLayout></DashBoardLayout>
-            </PrivateRoutes>,
+
+            <DashBoardLayout></DashBoardLayout>,
+
         children: [
             {
-                path: '/dashboard',
-                element: <MyBookings></MyBookings>
+                path: '/dashboard/bookings',
+                element: <BuyerRoute><MyBookings></MyBookings></BuyerRoute>
             },
             {
                 path: "/dashboard/wishlists",
-                element: <MyWishlist></MyWishlist>
+                element: <BuyerRoute><MyWishlist></MyWishlist></BuyerRoute>
             },
             {
                 path: "/dashboard/sellers",
@@ -65,7 +67,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/dashboard/addproduct",
-                element: <AddProduct></AddProduct>
+                element: <SellerRoute><AddProduct></AddProduct></SellerRoute>
             }
 
 
