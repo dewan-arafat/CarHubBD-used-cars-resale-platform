@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import useToken from '../../../Hook/useToken';
 
 const Register = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const [data, setData] = useState("");
     const [signUpError, setSignUPError] = useState('')
@@ -21,12 +21,11 @@ const Register = () => {
     }
 
     const handleRegister = data => {
-        console.log(data);
+
         setSignUPError('');
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 toast('User Created Successfully')
                 const userInfo = {
                     displayName: data.fullname
@@ -43,12 +42,13 @@ const Register = () => {
                 console.log(error)
 
             });
+        reset();
     }
 
 
     const saveUser = (name, email, user_role) => {
         const user = { name, email, user_role };
-        fetch('http://localhost:5000/users', {
+        fetch('https://furniture-resale-server-smoky.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

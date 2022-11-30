@@ -6,7 +6,7 @@ import { AuthContext } from '../../../Context/AuthContext/AuthProvider';
 import useToken from '../../../Hook/useToken';
 
 const Login = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const [token] = useToken(loginUserEmail);
@@ -25,7 +25,6 @@ const Login = () => {
 
 
     const handleLogin = data => {
-        console.log(data);
         setLoginError('');
         signIn(data.email, data.password)
             .then(result => {
@@ -37,7 +36,7 @@ const Login = () => {
                 console.log(error.message)
                 setLoginError(error.message);
             });
-
+        reset();
     }
 
     return (

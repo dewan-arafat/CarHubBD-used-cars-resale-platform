@@ -4,7 +4,6 @@ import { AuthContext } from '../../../../Context/AuthContext/AuthProvider';
 
 const Navber = () => {
     const { user, logOut } = useContext(AuthContext);
-    console.log(user);
 
     const handleLogOut = () => {
         logOut()
@@ -15,7 +14,15 @@ const Navber = () => {
         <>
             <li><Link to='/' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Home</Link></li>
             <li><Link to='/category' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Category</Link></li>
-            <li><Link to='/dashboard' className='text-stone-600 font-semibold text-xl hover:text-teal-400 p-3'>DashBoard</Link></li>
+
+            {
+                user?.uid ?
+                    <>
+                        <li><Link to='/dashboard' className='text-stone-600 font-semibold text-xl hover:text-teal-400 p-3'>DashBoard</Link></li>
+                    </> :
+                    <></>
+            }
+
             <li><Link to='/blog' className='text-stone-600 font-semibold text-xl  hover:text-teal-400 p-3'>Blog</Link></li>
         </>
     return (
@@ -29,7 +36,7 @@ const Navber = () => {
                         {menuItem}
                     </ul>
                 </div>
-                <Link className="font-body font-bold normal-case lg:text-2xl text-green-700">ResaleBD</Link>
+                <Link className="font-body font-bold normal-case text-md md:text-2xl text-green-700 md:pl-10">CarHub BD</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className=" menu-horizontal p-0">
@@ -43,7 +50,9 @@ const Navber = () => {
                     <>
                         <button onClick={handleLogOut}>Sign out</button>
                     </>
-                    : <Link to='/login' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Log In</Link>}
+                    : <> <button className='pr-3'><Link to='/login' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">Log In</Link></button>
+                        <Link to='/register' className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white ">Sign Up</Link></>
+                }
 
 
             </div>

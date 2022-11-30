@@ -23,7 +23,7 @@ const CategoryProductsCard = ({ product, setBookingProduct }) => {
             product_id: _id
         }
         console.log(wishlist)
-        fetch('http://localhost:5000/wishlists', {
+        fetch('https://furniture-resale-server-smoky.vercel.app/wishlists', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

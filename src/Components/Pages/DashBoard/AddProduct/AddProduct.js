@@ -18,7 +18,7 @@ const AddProduct = () => {
     const { data: categories = [], isLoading } = useQuery({
         queryKey: ['category'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/categoryOptions');
+            const res = await fetch('https://furniture-resale-server-smoky.vercel.app/categoryOptions');
             const data = await res.json();
             return data;
         }
@@ -53,9 +53,8 @@ const AddProduct = () => {
                     seller_contact: data.seller_contact,
                     upload_time: date,
                 }
-                console.log(product);
 
-                fetch('http://localhost:5000/products', {
+                fetch('https://furniture-resale-server-smoky.vercel.app/products', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',

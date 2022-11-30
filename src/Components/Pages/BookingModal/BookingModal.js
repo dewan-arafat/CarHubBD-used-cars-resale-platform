@@ -27,7 +27,7 @@ const BookingModal = ({ bookingProduct, setBookingProduct }) => {
             product_id: _id
         }
 
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://furniture-resale-server-smoky.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

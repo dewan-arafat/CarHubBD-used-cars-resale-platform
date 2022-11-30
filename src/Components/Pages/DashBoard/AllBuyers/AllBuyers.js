@@ -13,27 +13,11 @@ const AllBuyers = () => {
     const { data: buyers = [], refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users/buyers');
+            const res = await fetch('https://furniture-resale-server-smoky.vercel.app/users/buyers');
             const data = await res.json();
             return data;
         }
     });
-
-    // const handleVerify = id => {
-    //     const url = `http://localhost:5000/sellers/${id}`
-    //     fetch(url, {
-    //         method: 'PUT',
-
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             if (data.modifiedCount > 0) {
-    //                 toast.success('Make admin successful.')
-    //                 refetch();
-    //             }
-    //         })
-    //     console.log(url)
-    // }
 
     return (
 

@@ -8,7 +8,7 @@ const CategoryAllProducts = () => {
     console.log(products)
     const [bookingProduct, setBookingProduct] = useState(null)
     return (
-        <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 pt-24 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:pt-10'>
+        <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 pt-24 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 pt-20 pb-10'>
             {
                 products.map(product => <CategoryProductsCard
                     key={product._id}

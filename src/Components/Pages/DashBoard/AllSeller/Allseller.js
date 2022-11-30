@@ -13,14 +13,14 @@ const Allseller = () => {
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users/sellers');
+            const res = await fetch('https://furniture-resale-server-smoky.vercel.app/users/sellers');
             const data = await res.json();
             return data;
         }
     });
 
     const handleVerify = id => {
-        const url = `http://localhost:5000/sellers/${id}`
+        const url = `https://furniture-resale-server-smoky.vercel.app/sellers/${id}`
         fetch(url, {
             method: 'PUT',
 
@@ -32,7 +32,6 @@ const Allseller = () => {
                     refetch();
                 }
             })
-        console.log(url)
     }
 
     return (

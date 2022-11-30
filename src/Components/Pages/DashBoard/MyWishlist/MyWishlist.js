@@ -5,7 +5,7 @@ import MyWishlistCard from './MyWishlistCard';
 
 const MyWishlist = () => {
     const { user } = useContext(AuthContext);
-    const url = `http://localhost:5000/wishlists?email=${user?.email}`;
+    const url = `https://furniture-resale-server-smoky.vercel.app/wishlists?email=${user?.email}`;
 
     const { data: wishlists = [] } = useQuery({
         queryKey: ['wishlists', user?.email],

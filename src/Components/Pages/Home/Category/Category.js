@@ -5,14 +5,14 @@ const Category = () => {
     const [category, setCategory] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/category')
+        fetch('https://furniture-resale-server-smoky.vercel.app/category')
             .then(res => res.json())
             .then(data => setCategory(data))
 
     }, [])
 
     return (
-        <div className='pt-20'>
+        <div className='pb-10'><div className='pt-20'>
             <h1 className='text-center text-3xl font-bold'>Product Category</h1>
             <div className='grid gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 px-4 pt-24 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:pt-10'>
                 {
@@ -22,7 +22,8 @@ const Category = () => {
                     ></CategoryCard>)
                 }
             </div>
-        </div>
+        </div></div>
+
     );
 };
 

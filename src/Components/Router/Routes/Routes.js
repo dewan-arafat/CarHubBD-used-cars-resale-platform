@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashBoardLayout from "../../Layout/DashBoardLayout";
 import Main from "../../Layout/Main";
+import Blog from "../../Pages/Blog/Blog";
 import CategoryAllProducts from "../../Pages/CategoryAllProducts/CategoryAllProducts";
 import AddProduct from "../../Pages/DashBoard/AddProduct/AddProduct";
 import AllBuyers from "../../Pages/DashBoard/AllBuyers/AllBuyers";
@@ -15,12 +16,15 @@ import AdminRoute from "../AdminRoute/AdminRoute";
 import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import PrivateRoutes from "../PrivateRoute/PrivateRoutes";
 import SellerRoute from "../SellerRoute/SellerRoute";
+import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
+import Category from "../../Pages/Home/Category/Category";
 
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: '/',
@@ -28,8 +32,8 @@ const router = createBrowserRouter([
             },
             {
                 path: '/category/:id',
-                element: <CategoryAllProducts></CategoryAllProducts>,
-                loader: ({ params }) => fetch(`http://localhost:5000/category/${params.id}`),
+                element: <PrivateRoutes><CategoryAllProducts></CategoryAllProducts></PrivateRoutes>,
+                loader: ({ params }) => fetch(`https://furniture-resale-server-smoky.vercel.app/category/${params.id}`),
             },
             {
                 path: '/login',
@@ -38,7 +42,16 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register></Register>
-            }
+            },
+            {
+                path: '/blog',
+                element: <Blog></Blog>
+            },
+            {
+                path: '/category',
+                element: <Category></Category>
+            },
+
 
         ]
     },
